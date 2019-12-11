@@ -1,5 +1,6 @@
 package com.test.demo.controller;
 
+import com.test.demo.config.RedisUtil;
 import com.test.demo.dto.AddUser;
 import com.test.demo.dto.User;
 import com.test.demo.service.UserService;
@@ -13,6 +14,8 @@ import java.util.List;
 @RestController
 @Api("用户接口")
 public class UserController {
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired//自动装配
     private UserService userService;
     @Autowired
@@ -20,6 +23,7 @@ public class UserController {
     @ApiOperation(value = "获取用户")
     @RequestMapping(value = "getUser",method = RequestMethod.GET)
     public List<User> getUser() throws Exception{
+        redisUtil.set("java1","test");
         return userService.getUser();
     }
     @ApiOperation(value = "删除用户Id")
